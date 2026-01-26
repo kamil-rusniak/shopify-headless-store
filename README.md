@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shopify Headless Store
+
+A modern headless e-commerce storefront built with Next.js 16 and Shopify Storefront API.
+
+## Features
+
+- **Product Catalog**: Browse products with pagination
+- **Product Details**: View detailed product information with image gallery
+- **Variant Selection**: Select product options (size, color, etc.)
+- **Collections**: Browse products by collection
+- **Shopping Cart**: Add/update/remove items with drawer UI
+- **Shopify Checkout**: Seamless checkout via Shopify
+- **Responsive Design**: Works on all devices
+- **Dark Mode**: Automatic dark mode support
+- **SEO Optimized**: Dynamic metadata for products and collections
+
+## Tech Stack
+
+- [Next.js 16](https://nextjs.org/) - React framework
+- [Shopify Storefront API](https://shopify.dev/docs/api/storefront) - E-commerce backend
+- [Tailwind CSS 4](https://tailwindcss.com/) - Styling
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
 
 ## Getting Started
 
-First, run the development server:
+### 1. Shopify Setup
+
+1. Go to your Shopify Admin panel
+2. Navigate to **Settings** → **Apps and sales channels** → **Develop apps**
+3. Click **Create an app** and give it a name
+4. Configure the **Storefront API** access scopes:
+   - `unauthenticated_read_product_listings`
+   - `unauthenticated_read_product_inventory`
+   - `unauthenticated_read_product_tags`
+   - `unauthenticated_write_checkouts`
+   - `unauthenticated_read_checkouts`
+   - `unauthenticated_read_content`
+5. Install the app and copy the **Storefront API access token**
+
+### 2. Environment Setup
+
+Update the `.env.local` file with your Shopify credentials:
+
+```bash
+# Your Shopify store domain (e.g., your-store.myshopify.com)
+NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
+
+# Storefront API access token
+NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN=your-storefront-access-token
+
+# API version (use latest stable)
+NEXT_PUBLIC_SHOPIFY_API_VERSION=2026-01
+```
+
+### 3. Install Dependencies
+
+```bash
+npm install
+```
+
+### 4. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see your store.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+├── app/
+│   ├── api/cart/           # Cart API routes
+│   ├── collections/        # Collection pages
+│   ├── products/           # Product pages
+│   ├── layout.tsx          # Root layout
+│   └── page.tsx            # Homepage
+├── components/
+│   ├── add-to-cart-button.tsx
+│   ├── cart-drawer.tsx
+│   ├── header.tsx
+│   ├── product-card.tsx
+│   ├── product-gallery.tsx
+│   └── variant-selector.tsx
+├── lib/
+│   ├── cart-context.tsx    # Cart state management
+│   └── shopify/
+│       ├── client.ts       # Shopify API client
+│       ├── queries.ts      # GraphQL queries
+│       └── types.ts        # TypeScript types
+```
+
+## Customization
+
+### Adding New Features
+
+- **Search**: Implement search using the `SEARCH_PRODUCTS_QUERY` in `lib/shopify/queries.ts`
+- **Wishlist**: Add wishlist functionality with local storage or Shopify customer API
+- **Customer Accounts**: Integrate Shopify Customer Account API for login/registration
+
+### Styling
+
+The project uses Tailwind CSS. Customize the design by:
+- Editing `app/globals.css` for global styles
+- Modifying component classes in the `components/` directory
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Import the project in [Vercel](https://vercel.com)
+3. Add your environment variables
+4. Deploy!
+
+### Other Platforms
+
+Build the production version:
+
+```bash
+npm run build
+npm start
+```
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Shopify Storefront API](https://shopify.dev/docs/api/storefront)
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
