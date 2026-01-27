@@ -23,6 +23,7 @@ import {
   ADD_TO_CART_MUTATION,
   UPDATE_CART_MUTATION,
   REMOVE_FROM_CART_MUTATION,
+  SEARCH_PRODUCTS_QUERY,
 } from './queries';
 
 const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!;
@@ -198,4 +199,15 @@ export function formatPrice(money: { amount: string; currencyCode: string }): st
     style: 'currency',
     currency: money.currencyCode,
   }).format(parseFloat(money.amount));
+}
+
+// Search Function
+export async function searchProducts(query: string, first: number = 20): Promise<ShopifyProduct[]> {
+  const data = await shopifyFetch<{ search: { edges: { node: ShopifyProduct }[] } }>({
+    query: SEARCH_PRODUCTS_QUERY,
+    variables: { query, first },
+    cache: 'no-store',
+  });
+
+  return data.search.edges.map((edge) => edge.node);
 }
