@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
-import { searchProducts } from '@/lib/shopify';
-import { ProductCard } from '@/components';
+import { searchProducts, sortProducts, filterProducts } from '@/lib/shopify';
+import { ProductCard, SortSelect, FilterPanel } from '@/components';
 import Link from 'next/link';
 import { ShopifyProduct } from '@/lib/shopify/types';
+import { parseSearchParams } from '@/lib/url-utils';
 
 interface SearchPageProps {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; [key: string]: string | string[] | undefined }>;
 }
 
 export async function generateMetadata({
@@ -23,20 +24,28 @@ export async function generateMetadata({
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const { q } = await searchParams;
+  const searchParamsObj = await searchParams;
+  const { q } = searchParamsObj;
   const query = q || '';
 
-  let products: ShopifyProduct[] = [];
+  let allProducts: ShopifyProduct[] = [];
   let hasSearched = false;
 
   if (query.trim()) {
     hasSearched = true;
     try {
-      products = await searchProducts(query.trim(), 50);
+      allProducts = await searchProducts(query.trim(), 50);
     } catch (error) {
       console.error('Search error:', error);
     }
   }
+
+  // Parse search params for sorting and filtering
+  const { sort, filters } = parseSearchParams(new URLSearchParams(searchParamsObj as any));
+  
+  // Apply filters and sorting
+  const filteredProducts = filterProducts(allProducts, filters);
+  const sortedProducts = sortProducts(filteredProducts, sort);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -47,7 +56,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         </h1>
         {query && (
           <p className="mt-2 text-zinc-600 dark:text-zinc-400">
-            Found {products.length} product{products.length !== 1 ? 's' : ''}
+            Found {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
           </p>
         )}
       </div>
@@ -85,6 +94,21 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         </form>
       </div>
 
+      {/* Filters and Sort */}
+      {hasSearched && allProducts.length > 0 && (
+        <div className="mb-8 space-y-6">
+          <FilterPanel 
+            products={allProducts} 
+            currentFilters={filters}
+            productCount={filteredProducts.length}
+          />
+          
+          <div className="flex justify-between items-center">
+            <SortSelect currentSort={sort} productCount={filteredProducts.length} />
+          </div>
+        </div>
+      )}
+
       {/* Results */}
       {!hasSearched ? (
         <div className="text-center py-12">
@@ -92,9 +116,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             Enter a search term to find products.
           </p>
         </div>
-      ) : products.length > 0 ? (
+      ) : sortedProducts.length > 0 ? (
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {products.map((product) => (
+          {sortedProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

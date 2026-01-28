@@ -5,3 +5,5 @@ export { Header } from './header';
 export { ProductGallery } from './product-gallery';
 export { VariantSelector } from './variant-selector';
 export { SearchBar } from './search-bar';
+export { SortSelect } from './sort-select';
+export { FilterPanel } from './filter-panel';
