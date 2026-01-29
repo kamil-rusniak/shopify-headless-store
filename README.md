@@ -16,10 +16,10 @@ A modern headless e-commerce storefront built with Next.js 16 and Shopify Storef
 
 ## Tech Stack
 
-- [Next.js 16](https://nextjs.org/) - React framework
-- [Shopify Storefront API](https://shopify.dev/docs/api/storefront) - E-commerce backend
-- [Tailwind CSS 4](https://tailwindcss.com/) - Styling
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Next.js 16](https://nextjs.org/)
+- [Shopify Storefront API](https://shopify.dev/docs/api/storefront)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ## Getting Started
 
@@ -89,14 +89,6 @@ Open [http://localhost:3000](http://localhost:3000) to see your store.
 │       ├── queries.ts      # GraphQL queries
 │       └── types.ts        # TypeScript types
 ```
-
-## Customization
-
-### Adding New Features
-
-- **Search**: Implement search using the `SEARCH_PRODUCTS_QUERY` in `lib/shopify/queries.ts`
-- **Wishlist**: Add wishlist functionality with local storage or Shopify customer API
-- **Customer Accounts**: Integrate Shopify Customer Account API for login/registration
 
 ### Styling
 
