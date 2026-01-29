@@ -36,7 +36,7 @@ export function Header() {
         </nav>
 
         {/* Right Side Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 overflow-visible">
           {/* Search */}
           <SearchBar />
           

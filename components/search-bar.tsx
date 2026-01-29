@@ -95,7 +95,7 @@ export function SearchBar() {
 
       {/* Search Dropdown */}
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-96 rounded-lg border border-zinc-200 bg-white p-4 shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
+        <div className="fixed inset-x-4 top-16 z-50 w-auto max-w-md rounded-lg border border-zinc-200 bg-white p-4 shadow-lg dark:border-zinc-700 dark:bg-zinc-900 sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-2 sm:w-80 sm:max-w-none md:w-96">
           <form onSubmit={handleSearch} className="space-y-4">
             {/* Search Input */}
             <div className="relative">
