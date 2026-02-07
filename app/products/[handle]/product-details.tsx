@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { ShopifyProduct, formatPrice } from '@/lib/shopify';
 import { ProductGallery, VariantSelector, AddToCartButton } from '@/components';
 
@@ -125,12 +126,13 @@ export function ProductDetails({ product }: ProductDetailsProps) {
               </h2>
               <div className="mt-4 flex flex-wrap gap-2">
                 {product.tags.map((tag) => (
-                  <span
+                  <Link
                     key={tag}
-                    className="rounded-full bg-zinc-100 px-3 py-1 text-sm text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
+                    href={`/collections/all?tags=${encodeURIComponent(tag)}`}
+                    className="inline-flex items-center rounded-full bg-zinc-100 px-3 py-1 text-sm text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
                   >
                     {tag}
-                  </span>
+                  </Link>
                 ))}
               </div>
             </div>

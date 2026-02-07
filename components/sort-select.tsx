@@ -37,7 +37,7 @@ export function SortSelect({ currentSort = 'featured', productCount }: SortSelec
         <select
           value={currentSort}
           onChange={(e) => handleSortChange(e.target.value as SortOption)}
-          className="appearance-none rounded-lg border border-zinc-300 bg-white px-4 py-2 pr-8 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:border-white dark:focus:ring-white"
+          className="appearance-none cursor-pointer rounded-lg border border-zinc-300 bg-white px-4 py-2 pr-8 text-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:border-white dark:focus:ring-white"
         >
           {SORT_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>
